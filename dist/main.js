@@ -1,6 +1,7 @@
 function exportBookmarklet(){//完成したbookmarkletをクリップボードに出力する関数
-    const template=encodeURIComponent(document.getElementById("importArea").value)
-    console.log(template)
+    const template=document.getElementById("importArea").value
+    const replacedTemplate=template.replace(/\n/g, '<br>');
+    const encodedTemplate=encodeURIComponent(replacedTemplate)
     const pasteTemplate=`
         function pasteTemplate(template){
             const elements = document.querySelectorAll("[id^='editorParent_']");
@@ -14,12 +15,12 @@ function exportBookmarklet(){//完成したbookmarkletをクリップボード�
             const rewriteElement = document.getElementById(rewriteId).children[0];
         
             const templateDiv = document.createElement('div');
-            templateDiv.textContent = decodeURIComponent(template);
+            templateDiv.innerHTML = decodeURIComponent(template);
             rewriteElement.insertBefore(templateDiv, rewriteElement.firstChild);
         }
         
         try {
-            pasteTemplate("${template}")
+            pasteTemplate("${encodedTemplate}")
         }
         catch (exception) {
             window.alert("Outlookページ内のメール作成画面上で実行してください。")
