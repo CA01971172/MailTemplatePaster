@@ -55,44 +55,32 @@ const templateDiv = document.createElement('div');
 templateDiv.textContent = template;
 rewriteElement.appendChild(templateDiv);
 ```
-##### deleteSpaceEnter()
-- 文字列から空白文字と改行を削除する関数 deleteSpaceEnter(value) を作成し(valueは受け取る文字列)、  
-その中に以下のプログラムを記述する。
-```js
-let result = ""
-const result0 = value.replace(" ", "");
-const result1 = result0.replace("\n", "");
-const result2 = result1.replace("　", "");
-result = result2
-return result
-```
-
 ##### pasteClipboard()
 - 受け取った文字列をクリップボードに貼り付ける関数 pasteClipboard(value) を作成し(valueは受け取る文字列)、  
 その中に以下のプログラムを記述する。
 ```js
 if(navigator.clipboard){//サポートしているかを確認
     navigator.clipboard.writeText(value)//クリップボードに出力
+    window.alert("クリップボードに出力しました。")
 }
 ```
 ##### まとめ
 関数 pasteTemplate() のソースコードを文字列 pasteTemplate として宣言する。
 ```js
 const template = "メールのテンプレート"; // ユーザーがウェブページにメールのテンプレートととして入力したものを取得したもの
-const encodedTemplate = encodeURIComponent(template); // メールのテンプレートをURLエンコードする
 const pasteTemplate = `
 pasteTemplate(template){
     ソースコード
 }
-pasteTemplate(${encodedTemplate})
+pasteTemplate(${template})
 `;
 ```
-受け取った文字列から空白文字と改行を削除してブックマークレットの型にはめ込む関数 convertBookmarklet() を以下の手順で用意・使用し、クリップボードに出力する文字列 bookmarklet を作成する。
-1. 関数 deleteSpaceEnter() を使用し、文字列 sourceCode から空白文字と改行を削除した文字列 formattedSourceCode を作成する。
-1. formattedSourceCode をブックマークレットの型にはめ込んだ文字列 bookmarklet を作成する。
+受け取った文字列をブックマークレットの型にはめ込む関数 convertBookmarklet() を以下の手順で用意・使用し、クリップボードに出力する文字列 bookmarklet を作成する。
+1. 組み込み関数 encodeURIComponent() を使用し、文字列 sourceCode をURLエンコードした文字列 formattedSourceCode を作成する。
+2. formattedSourceCode をブックマークレットの型にはめ込んだ文字列 bookmarklet を作成する。
 ```js
 function convertBookmarklet(sourceCode){
-const formattedSourceCode = deleteSpaceEnter(sourceCode);
+const formattedSourceCode = encodeURIComponent(sourceCode);
 const result = `javascript:(function(){${formattedSourceCode}})()`;
 }
 const bookmarklet = convertBookmarklet(pasteTemplate)
