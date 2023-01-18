@@ -37,7 +37,7 @@ const elements = document.querySelectorAll("[id^='editorParent_']"); // IDがedi
 取得した要素からID名のみを文字列型配列で取得する。
 ```js
 const idNames = new Array;
-for(let i in elements){
+for (let i = 0; i < elements.length; i++) {
     idNames.push(elements[i].id); // 要素のIDを文字列型で配列に挿入する
 }
 ```
@@ -46,8 +46,8 @@ for(let i in elements){
 ```js
 const idNamesComplete = idNames.filter(RegExp.prototype.test,/^editorParent_\d$/); // 目的のIDに末尾の数字部分以外完全一致するID名群を文字列型配列で取得する
 idNamesComplete.sort();
-rewriteId = idNamesComplete[idNamesComplete.length-1]; // 末尾の数字部分が最大のID名を取得する
-rewriteElement = document.getElementByID(rewriteIdName); // 書き換える対象の要素を取得する
+const rewriteId = idNamesComplete[idNamesComplete.length-1]; // 末尾の数字部分が最大のID名を取得する
+const rewriteElement = document.getElementById(rewriteId).children[0]; // 書き換える対象の要素を取得する
 ```
 取得した要素の子要素として、メールのテンプレートを含んだdiv要素を追加する。
 ```js
