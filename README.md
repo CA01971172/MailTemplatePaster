@@ -79,7 +79,7 @@ if(navigator.clipboard){//サポートしているかを確認
 関数 pasteTemplate() のソースコードを文字列 pasteTemplate として宣言する。
 ```js
 const template = "メールのテンプレート"; // ユーザーがウェブページにメールのテンプレートととして入力したものを取得したもの
-const encodedTemplate = encodeURI(template); // メールのテンプレートをURLエンコードする
+const encodedTemplate = encodeURIComponent(template); // メールのテンプレートをURLエンコードする
 const pasteTemplate = `
 pasteTemplate(template){
     ソースコード
