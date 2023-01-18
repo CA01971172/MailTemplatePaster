@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+}
+
+textarea {
+    resize: none;
+    width:100%;
+    height:1rem;
+}
+
+#main{
+    width: 50%;
+    min-width: 480px;
+    margin: 10px auto 0 auto;
+}
