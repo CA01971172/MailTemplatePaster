@@ -1,32 +1,29 @@
 function exportBookmarklet(){//完成したbookmarkletをクリップボードに出力する関数
-    const template=document.getElementById("importArea").textContent
-    console.log(document.getElementById("importArea"))
-    console.log(document.getElementById("importArea").value)
+    const template=encodeURIComponent(document.getElementById("importArea").value)
+    console.log(template)
     const pasteTemplate=`
-    function pasteTemplate(template){
-        const elements = document.querySelectorAll("[id^='editorParent_']");
-    
-        const idNames = new Array;
-        for (let i = 0; i < elements.length; i++) {
-            idNames.push(elements[i].id);
+        function pasteTemplate(template){
+            const elements = document.querySelectorAll("[id^='editorParent_']");
+        
+            const idNames = new Array;
+            for (let i = 0; i < elements.length; i++) {
+                idNames.push(elements[i].id);
+            }
+
+            const rewriteId = idNames[idNames.length-1];
+            const rewriteElement = document.getElementById(rewriteId).children[0];
+        
+            const templateDiv = document.createElement('div');
+            templateDiv.textContent = decodeURIComponent(template);
+            rewriteElement.insertBefore(templateDiv, rewriteElement.firstChild);
         }
-    
-        const idNamesComplete = idNames.filter(RegExp.prototype.test,/^editorParent_\d$/);
-        idNamesComplete.sort();
-        const rewriteId = idNamesComplete[idNamesComplete.length-1];
-        const rewriteElement = document.getElementById(rewriteId).children[0];
-    
-        const templateDiv = document.createElement('div');
-        templateDiv.textContent = template;
-        rewriteElement.insertBefore(templateDiv, rewriteElement.firstChild);
-    }
-    
-    try {
-        pasteTemplate(${template})
-    }
-    catch (exception) {
-        window.alert("Outlookページ内のメール作成画面上で実行してください。")
-    }
+        
+        try {
+            pasteTemplate("${template}")
+        }
+        catch (exception) {
+            window.alert("Outlookページ内のメール作成画面上で実行してください。")
+        }
     `
     const bookmarklet=convertBookmarklet(pasteTemplate)
     pasteClipboard(bookmarklet)
