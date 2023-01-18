@@ -78,13 +78,14 @@ if(navigator.clipboard){//サポートしているかを確認
 ##### まとめ
 関数 pasteTemplate() のソースコードを文字列 pasteTemplate として宣言する。
 ```js
-const template = "メールのテンプレート" // ユーザーがウェブページにメールのテンプレートととして入力したものを取得したもの
+const template = "メールのテンプレート"; // ユーザーがウェブページにメールのテンプレートととして入力したものを取得したもの
+const encodedTemplate = encodeURI(template); // メールのテンプレートをURLエンコードする
 const pasteTemplate = `
 pasteTemplate(template){
     ソースコード
 }
-pasteTemplate(${template})
-`
+pasteTemplate(${encodedTemplate})
+`;
 ```
 受け取った文字列から空白文字と改行を削除してブックマークレットの型にはめ込む関数 convertBookmarklet() を以下の手順で用意・使用し、クリップボードに出力する文字列 bookmarklet を作成する。
 1. 関数 deleteSpaceEnter() を使用し、文字列 sourceCode から空白文字と改行を削除した文字列 formattedSourceCode を作成する。

@@ -16,7 +16,7 @@ function pasteTemplate(template){ // メールのテンプレートをWeb版Outl
     rewriteElement.insertBefore(templateDiv, rewriteElement.firstChild);
 }
 
-const templateString = "よろしくお願いします"
+const templateString = `よろしくお願いします`
 
 try {
     pasteTemplate(templateString)
