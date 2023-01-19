@@ -5,6 +5,7 @@ body{
 textarea {
     resize: none;
     width:100%;
+    max-width: 41rem;
     min-height:3rem;
 }
 
