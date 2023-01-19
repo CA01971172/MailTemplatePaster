@@ -44,20 +44,23 @@ function pasteClipboard(value){//受け取った文字列をクリップボー�
 }
 
 
-function setTextareaAutoResize(idName){//textareaの高さを自動調整する処理を適用する関数
-    //textareaの要素を取得
-    let textarea = document.getElementById(idName);
-    //textareaのデフォルトの要素の高さを取得
-    let clientHeight = textarea.clientHeight;
-
-    //textareaのinputイベント
-    textarea.addEventListener('input', ()=>{
-        //textareaの要素の高さを設定（rows属性で行を指定するなら「px」ではなく「auto」で良いかも！）
-        textarea.style.height = clientHeight + 'px';
-        //textareaの入力内容の高さを取得
-        let scrollHeight = textarea.scrollHeight;
-        //textareaの高さに入力内容の高さを設定
-        textarea.style.height = scrollHeight + 'px';
+function setTextareaAutoResize(){//textareaの高さを自動調整する処理を適用する関数
+    window.addEventListener("DOMContentLoaded", () => {
+        // textareaタグを全て取得
+        const textareaEls = document.querySelectorAll("textarea");
+        
+        textareaEls.forEach((textareaEl) => {
+          // デフォルト値としてスタイル属性を付与
+            textareaEl.setAttribute("style", `height: ${textareaEl.scrollHeight}px;`);
+          // inputイベントが発生するたびに関数呼び出し
+            textareaEl.addEventListener("input", setTextareaHeight);
+        });
+        
+        // textareaの高さを計算して指定する関数
+        function setTextareaHeight() {
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`;
+        }
     });
 }
-setTextareaAutoResize('importArea');
+setTextareaAutoResize();
